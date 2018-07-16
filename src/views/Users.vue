@@ -20,9 +20,8 @@
         <td>{{ props.item.id }}</td>
         <td class="text-xs-right">{{ props.item.userName }}</td>
         <td class="text-xs-right">{{ props.item.firstName }} {{ props.item.lastName }}</td>
-        <td class="text-xs-right"> {{ props.item.roles }} </td>
         <td class="text-xs-right">
-            <v-btn color="info" small>Szerkeszt</v-btn>
+            <v-btn color="info" small @click="edit(props.item)" >Szerkeszt</v-btn>
             <v-btn color="error" small>Töröl</v-btn>
         </td>
       </template>
@@ -49,6 +48,16 @@ export default {
     }
   },
 
+  methods: {
+    edit(item) {
+      console.log(item)
+    },
+    delete() {
+
+    }
+
+  },
+
   data() {
     return {
       search: "",
@@ -56,8 +65,7 @@ export default {
         { text: "ID", value: "id" },
         { text: "Felhasználó név", value: "username" },
         { text: "Név", value: "name" },
-        { text: "Jelszó", value: "password" },
-        { text: "Iron (%)", value: "iron" }
+        { text: "Művelet"}
       ]
     };
   }
