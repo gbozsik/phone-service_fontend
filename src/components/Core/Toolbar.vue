@@ -1,50 +1,23 @@
 <template>
   <v-toolbar :color="color" dark fixed app>
       <v-toolbar-side-icon @click.stop="$emit('side-icon-click')"></v-toolbar-side-icon>
-      <v-menu :nudge-width="100">
-        <v-toolbar-title slot="activator">
-          <span>{{ partnerName }}</span>
-          <v-icon dark>arrow_drop_down</v-icon>
-        </v-toolbar-title>
-        <v-list>
-          <v-list-tile v-for="item in partners" :key="item.id" @click="partnerChanged(item)">
-            <v-list-tile-title v-text="item.name"></v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
+      <PartnerChooser />
       <v-spacer></v-spacer>
    </v-toolbar>
 </template>
 
 <script>
+  import PartnerChooser from '@/components/Partners/PartnerChooser'
 
   export default {
-    props: [
-      'side-icon-click'
-    ],
+    components: {
+      PartnerChooser
+    },
     computed: {
-      partnerName() {
-        return this.$store.getters['partner/name']
-      },
-      partners() {
-        return this.$store.state.partner.items
-      },
       color() {
         return this.$store.getters['partner/color']
       },
-      first() {
-        return this.$store.getters['partner/first']
-      }
     },
-    mounted() {
-       this.$store.commit("partner/changed", this.first)
-    },
-    methods: {
-      partnerChanged(item) {
-        this.$store.commit("partner/changed", item)
-        this.$router.push({name: 'home.index'})
-      }
-    }
   }
 
 </script>
