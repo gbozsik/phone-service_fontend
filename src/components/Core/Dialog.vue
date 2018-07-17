@@ -7,8 +7,8 @@
                     <v-toolbar-title>{{title}}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark flat @click.native="onClose()">{{okText}}</v-btn>
-                        <v-btn dark flat @click.native="onClose()">{{cancelText}}</v-btn>
+                        <v-btn dark flat @click.native="onCancel()">{{okBtnText}}</v-btn>
+                        <v-btn dark flat @click.native="onCancel()">{{cancelBtnText}}</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <slot></slot>
@@ -22,8 +22,8 @@
                     <v-toolbar-title>{{title}}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark flat @click.native="onClose()">{{okText}}</v-btn>
-                        <v-btn dark flat @click.native="onClose()">{{cancelText}}</v-btn>
+                        <v-btn dark flat @click.native="onCancel()">{{okBtnText}}</v-btn>
+                        <v-btn dark flat @click.native="onCancel()">{{cancelBtnText}}</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <slot></slot>
@@ -36,14 +36,15 @@
 <script>
 
 export default {
-    props: [
-        'show', 
-        'title',
-        'color', 
-        'onClose', 
-        'fullscreen',
-        'okText',
-        'cancelText'
-    ], 
+    props: {
+        show:           { type: Boolean, default: false, required: true },
+        title:          { type: String, default: "Dialog title", required: true },
+        color:          { type: String, default: "primary", required: false },
+        onCancel:       { type: Function, default: null, required: true },
+        onOk:           { type: Function, default: null, required: true },
+        fullscreen:     { type: Boolean, default: false, required: false },
+        okBtnText:      { type: String, default: "OK", required: false },
+        cancelBtnText:  { type: String, default: "Mégse", required: false },
+    }, 
 }
 </script>
