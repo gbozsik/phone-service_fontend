@@ -8,35 +8,8 @@
           </span>
         <span>Új felhasználó létrehozása</span>
       </v-tooltip>
-    <v-card>
-        <v-card-title><h2>Felhasználók</h2>
-            <v-spacer></v-spacer>
-            <v-text-field append-icon="search" label="Keresés" single-line hide-details v-model="search"></v-text-field>
-        </v-card-title>
 
-        <v-data-table 
-        :headers="headers" 
-        :items="items" 
-        :search="search" 
-        rows-per-page-text="Sor / oldal"
-        :rows-per-page-items="rows_per_page"
-        :must-sort="true"
-        >
-        <template slot="items" slot-scope="props">
-          <td>{{ props.item.id }}</td>
-          <td class="text-xs-left">{{ props.item.userName }}</td>
-          <td class="text-xs-left">{{ props.item.firstName }} {{ props.item.lastName }}</td>
-          <td class="text-xs-right">
-              <v-btn flat icon color="teal lighten-1" @click="editDialogShow(props.item)"><v-icon>edit</v-icon></v-btn>
-              <v-btn flat icon color="red lighten-1" @click="deleteDialogShow(props.item)"><v-icon>delete</v-icon></v-btn>
-          </td>
-        </template>
-
-          <v-alert slot="no-results" :value="true" color="error" icon="warning">
-            Nincs találat a(z) "{{ search }}" kifejezésre.
-          </v-alert>
-        </v-data-table>
-    </v-card>
+    <Table title="Felhasználók" :headers="headers" :items="items" :onEdit="editDialogShow" :onDelete="deleteDialogShow" />
 
     <Dialog
       v-if="selectedItem !== null"
@@ -117,10 +90,12 @@
 <script>
 
 import Dialog from '@/components/Core/Dialog'
+import Table from '@/components/Core/Table'
 
 export default {
   components: {
-    Dialog
+    Dialog,
+    Table
   },
 
   mounted() {
