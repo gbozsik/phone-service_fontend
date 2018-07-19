@@ -9,17 +9,10 @@
         <span>Új felhasználó létrehozása</span>
       </v-tooltip>
 
-    <Table title="Felhasználók" :headers="headers" :items="items" :onEdit="editDialogShow" :onDelete="deleteDialogShow" />
+    <Table title="Felhasználók" :headers="tableHeaders" :items="tableItems" :actions="tableActions" />
 
-    <Dialog
-      v-if="selectedItem !== null"
-      title="Felhasználó szerkesztése"  
-      okBtnText="Mentés"
-      cancelBtnText="Mégse"
-      color="teal lighten-1"
-      :show="editDialogState" 
-      :onCancel="editDialogClose" 
-      :onOk="editDialogSave">
+    <Dialog v-if="selectedItem !== null" title="Felhasználó szerkesztése" okBtnText="Mentés"
+      cancelBtnText="Mégse" color="teal lighten-1" :show="editDialogState" :actions="editDialogActions">
       
       <v-card>
         <v-card-text>
@@ -54,19 +47,11 @@
           <small>*kötelező mezők</small>
         </v-card-text>
       </v-card>
-
-
     </Dialog>
 
-    <Dialog
-      title="Felhasználó törlése"  
-      okBtnText="Törlés"
-      color="red lighten-1"
-      :show="deleteDialogState" 
-      :onCancel="deleteDialogClose" 
-      :onOk="deleteDialogSave">
-      
-
+    <Dialog v-if="selectedItem !== null" title="Felhasználó törlése" okBtnText="Törlés"
+      color="red lighten-1" :show="deleteDialogState" :actions="deleteDialogActions">
+  
       <v-card>
         <v-card-title primary-title><h2>Biztosan törlöd ezt felhasználót?</h2></v-card-title>
         <v-card-text>
@@ -79,18 +64,14 @@
           </v-container>
         </v-card-text>
       </v-card>
-
-
     </Dialog>
 
-  
   </v-flex>
 </template>
 
 <script>
-
-import Dialog from '@/components/Core/Dialog'
-import Table from '@/components/Core/Table'
+import Dialog from "@/components/Core/Dialog";
+import Table from "@/components/Core/Table";
 
 export default {
   components: {
@@ -99,38 +80,37 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch('users/getUsersList');
+    this.$store.dispatch("users/getUsersList");
   },
 
   computed: {
-    items() { 
-      return this.$store.state.users.users 
+    tableItems() {
+      return this.$store.state.users.users;
     }
   },
 
   methods: {
     editDialogShow(item) {
-      this.selectedItem = item
-      this.editDialogState = true
+      this.selectedItem = item;
+      this.editDialogState = true;
     },
     editDialogClose() {
-      this.editDialogState = false
+      this.editDialogState = false;
     },
     editDialogSave() {
-      this.editDialogState = false
-    },
-    
-    deleteDialogShow(item) {
-      this.selectedItem = item
-      this.deleteDialogState = true
-    },
-    deleteDialogClose() {
-      this.deleteDialogState = false
-    },
-    deleteDialogSave() {
-      this.editDialogState = false
+      this.editDialogState = false;
     },
 
+    deleteDialogShow(item) {
+      this.selectedItem = item;
+      this.deleteDialogState = true;
+    },
+    deleteDialogClose() {
+      this.deleteDialogState = false;
+    },
+    deleteDialogSave() {
+      this.editDialogState = false;
+    }
   },
 
   data() {
@@ -138,14 +118,45 @@ export default {
       editDialogState: false,
       deleteDialogState: false,
       selectedItem: null,
-      search: "",
-      rows_per_page: [50, 100, 150, {text: "Mind",value:-1}],
-      headers: [
-        
-        { text: "ID",               value: "id",        align:"left",  sortable: true },
-        { text: "Felhasználó név",  value: "userName",  align:"left",  sortable: true },
-        { text: "Név",              value: "firstName", align:"left",  sortable: true },
-        { text: "Művelet",          value: "firstName", align:"right", sortable: false }
+      tableHeaders: [
+        { text: "ID", value: "id", align: "left", sortable: true },
+        { text: "Felhasználó név", value: "userName", align: "left", sortable: true },
+        { text: "Név", value: "firstName", align: "left", sortable: true },
+        { text: "Művelet", value: "firstName", align: "right", sortable: false }
+      ],
+      tableActions: [
+        {
+          icon: "edit",
+          color: "teal lighten-1",
+          click: this.editDialogShow,
+          tooltip: "Szerkesztés"
+        },
+        {
+          icon: "delete",
+          color: "red lighten-1",
+          click: this.deleteDialogShow,
+          tooltip: "Törlés"
+        }
+      ],
+      editDialogActions: [
+        {
+          text: "Mentés",
+          click: this.editDialogSave,
+        },
+        {
+          text: "Bezárás",
+          click: this.editDialogClose,
+        },
+      ],
+      deleteDialogActions: [
+        {
+          text: "Igen",
+          click: this.deleteDialogSave,
+        },
+        {
+          text: "Nem",
+          click: this.deleteDialogClose,
+        },
       ]
     };
   }

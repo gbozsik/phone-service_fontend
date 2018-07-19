@@ -12,8 +12,14 @@
           <td class="text-xs-left">{{ props.item.userName }}</td>
           <td class="text-xs-left">{{ props.item.firstName }} {{ props.item.lastName }}</td>
           <td class="text-xs-right">
-              <v-btn flat icon color="teal lighten-1" @click="onEdit(props.item)"><v-icon>edit</v-icon></v-btn>
-              <v-btn flat icon color="red lighten-1" @click="onDelete(props.item)"><v-icon>delete</v-icon></v-btn>
+               <template v-for="action in actions">
+                   <v-tooltip bottom color="grey darken-1" :key="action.icon">
+                        <span slot="activator">
+                            <v-btn flat icon :color="action.color" @click="action.click(props.item)"><v-icon>{{ action.icon }}</v-icon></v-btn>
+                        </span>
+                        <span>{{ action.tooltip }}</span>
+                    </v-tooltip> 
+               </template>
           </td>
         </template>
 
@@ -29,10 +35,9 @@
 export default {
     props: {
         title:          { type: String, default: "Table title", required: true },
-        headers:        { type: Array, default: [], required: true },
-        items:          { type: Array, default: [], required: true },
-        onEdit:         { type: Function, default: null, required: true },
-        onDelete:       { type: Function, default: null, required: true },
+        headers:        { type: Array, default: () => [], required: true },
+        items:          { type: Array, default: () => [], required: true },
+        actions:        { type: Array, default: () => [], required: false },
         rows_per_page:  { type: Array, default: () => [50, 100, 150, {text: "Mind",value:-1}], required: false },
     }, 
     data() {
