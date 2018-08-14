@@ -9,7 +9,7 @@
         <span>Új felhasználó létrehozása</span>
       </v-tooltip>
 
-    <Table title="Felhasználók" :headers="tableHeaders" :fields="tableItemsFields" :items="tableItems" :actions="tableActions" />
+    <Table title="Felhasználók" :headers="tableHeaders" :items="tableItems" :actions="tableActions" />
 
     <Dialog v-if="selectedItem !== null" title="Felhasználó szerkesztése" okBtnText="Mentés"
       cancelBtnText="Mégse" color="teal lighten-1" :show="editDialogState" :actions="editDialogActions">
