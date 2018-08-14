@@ -125,7 +125,6 @@ export default {
         { text: "Vezetéknév", value: "lastName", align: "left", sortable: true },
         { text: "Művelet", value: "actions", align: "right", sortable: false }
       ],
-      tableItemsFields: ['id'],
       tableActions: [
         {
           icon: "edit",
