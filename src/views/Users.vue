@@ -9,7 +9,7 @@
         <span>Új felhasználó létrehozása</span>
       </v-tooltip>
 
-    <Table title="Felhasználók" :headers="tableHeaders" :items="tableItems" :actions="tableActions" />
+    <Table title="Felhasználók" :headers="tableHeaders" :fields="tableItemsFields" :items="tableItems" :actions="tableActions" />
 
     <Dialog v-if="selectedItem !== null" title="Felhasználó szerkesztése" okBtnText="Mentés"
       cancelBtnText="Mégse" color="teal lighten-1" :show="editDialogState" :actions="editDialogActions">
@@ -85,7 +85,7 @@ export default {
 
   computed: {
     tableItems() {
-      return this.$store.state.users.users;
+      return this.$store.state.users.users
     }
   },
 
@@ -121,9 +121,11 @@ export default {
       tableHeaders: [
         { text: "ID", value: "id", align: "left", sortable: true },
         { text: "Felhasználó név", value: "userName", align: "left", sortable: true },
-        { text: "Név", value: "firstName", align: "left", sortable: true },
-        { text: "Művelet", value: "firstName", align: "right", sortable: false }
+        { text: "Keresztnév", value: "firstName", align: "left", sortable: true },
+        { text: "Vezetéknév", value: "lastName", align: "left", sortable: true },
+        { text: "Művelet", value: "actions", align: "right", sortable: false }
       ],
+      tableItemsFields: ['id'],
       tableActions: [
         {
           icon: "edit",
