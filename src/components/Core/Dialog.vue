@@ -40,10 +40,6 @@ export default {
         color:          { type: String, default: "primary", required: false },
         fullscreen:     { type: Boolean, default: false, required: false },
         actions:        { type: Array, default: () => [], required: false },
-        //onCancel:       { type: Function, default: null, required: true },
-        //onOk:           { type: Function, default: null, required: true },
-        //okBtnText:      { type: String, default: "OK", required: false },
-        //cancelBtnText:  { type: String, default: "Mégse", required: false },
     },
 }
 </script>

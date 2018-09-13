@@ -11,8 +11,7 @@
 
     <Table title="Felhasználók" :headers="tableHeaders" :items="tableItems" :actions="tableActions" />
 
-    <Dialog v-if="selectedItem !== null" title="Felhasználó szerkesztése" okBtnText="Mentés"
-      cancelBtnText="Mégse" color="teal lighten-1" :show="editDialogState" :actions="editDialogActions">
+    <Dialog v-if="selectedItem !== null" title="Felhasználó szerkesztése" color="teal lighten-1" :show="editDialogState" :actions="editDialogActions">
       
       <v-card>
         <v-card-text>
@@ -49,8 +48,7 @@
       </v-card>
     </Dialog>
 
-    <Dialog v-if="selectedItem !== null" title="Felhasználó törlése" okBtnText="Törlés"
-      color="red lighten-1" :show="deleteDialogState" :actions="deleteDialogActions">
+    <Dialog v-if="selectedItem !== null" title="Felhasználó törlése"  color="red lighten-1" :show="deleteDialogState" :actions="deleteDialogActions">
   
       <v-card>
         <v-card-title primary-title><h2>Biztosan törlöd ezt felhasználót?</h2></v-card-title>
@@ -91,18 +89,20 @@ export default {
 
   methods: {
     editDialogShow(item) {
-      this.selectedItem = item;
+      this.selectedItem = Object.assign({}, item)
       this.editDialogState = true;
     },
     editDialogClose() {
+
       this.editDialogState = false;
     },
     editDialogSave() {
+      this.$store.dispatch("users/updateUser", this.selectedItem);
       this.editDialogState = false;
     },
 
     deleteDialogShow(item) {
-      this.selectedItem = item;
+      this.selectedItem = Object.assign({}, item)
       this.deleteDialogState = true;
     },
     deleteDialogClose() {
