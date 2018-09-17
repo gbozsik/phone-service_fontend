@@ -21,8 +21,8 @@ export default {
         }
     },
     mutations: {
-        loadUsersList: function (state, users) {
-            state.users = users
+        loadUsersList: function (state, payload) {
+            state.users = payload
         },
     },
 }

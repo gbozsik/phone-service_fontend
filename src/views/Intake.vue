@@ -1,4 +1,5 @@
 <template>
+  <v-layout justify-center row>
     <v-flex>
       <v-card>
         <v-card-text>
@@ -8,60 +9,121 @@
                 <v-text-field label="Csomagszám" required ></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-combobox v-model="selectedCustomer" :items="customers" label="Ügyfél"></v-combobox>
+                <v-select :items="customers" v-model="selectedCustomer" item-text="name" label="Ügyfél" single-line  return-object/>
               </v-flex>
               <v-flex xs12 sm6>
-                <v-text-field label="Munkalap szám" required readonly></v-text-field>
+                <v-text-field label="Munkalap szám" required disabled></v-text-field>
               </v-flex>
               <v-flex xs12 sm6>
-                <v-text-field label="Ügyfél munkaszám" required readonly></v-text-field>
+                <v-text-field label="Ügyfél munkaszám" required disabled></v-text-field>
               </v-flex>
               <v-flex xs12>
                 <v-text-field label="IMEI" required ></v-text-field>
               </v-flex>
-              <v-flex xs12 sm5>
-                <v-combobox v-model="selectedProductModel" :items="productModels" label="Készülék model"></v-combobox>
+            </v-layout>
+          </v-container>    
+        </v-card-text>
+      </v-card>
+    </v-flex>
+    <v-flex>
+      <v-card>
+        <v-card-text>
+          <h4 class="inputTitle">Készülék információk</h4>
+          <v-container>
+            <v-layout wrap>
+
+              <v-flex xs12 sm4>
+                <v-select :items="manufacturers" 
+                          v-model="selectedManufacturer" 
+                          item-text="name" 
+                          label="Gyártó" 
+                          single-line  
+                          return-object>
+                </v-select>
               </v-flex>
-              <v-flex xs12 sm6>
+              <v-flex xs12 sm4>
+                <v-select :items="products" 
+                          v-model="selectedProduct" 
+                          @change="productNameChanged()"
+                          item-text="name" 
+                          label="Model" 
+                          single-line  
+                          return-object >
+                </v-select>
+              </v-flex>
+              <v-flex xs12 sm4>
+                <v-select :items="categories" 
+                          v-model="selectedCategory" 
+                          item-text="name" 
+                          label="Kategória" 
+                          single-line  
+                          return-object>
+                </v-select>
+              </v-flex>
+
+
+              <v-flex xs12>
                 <v-combobox v-model="selectedProductOperator" :items="productOperators" label="Készülék operátor"></v-combobox>
               </v-flex >
-              <v-flex xs12 sm1>
+              <v-flex xs12>
                 <v-checkbox v-model="doa" label="DOA" required  @change="doaChanged()"></v-checkbox>
-              </v-flex >
-              <v-flex xs12 sm6>
-                <v-combobox v-model="selectedProductCategory" :items="productCategories" label="Készülék kategória"></v-combobox>
               </v-flex >
               <v-flex xs12 sm6>
                 <v-combobox v-model="selectedRepairType" :items="repairTypes" label="Teendő"></v-combobox>
               </v-flex >
             </v-layout>
           </v-container>
-          <small>*kötelező mezők</small>
         </v-card-text>
       </v-card>
     </v-flex>
+  </v-layout>
 </template>
 
 <script>
 export default {
 
-  mounted() {},
-  computed: {},
+  mounted() {
+    this.$store.dispatch("customer/getCustomersList");
+    this.$store.dispatch("product/getProductsList");
+  },
+  computed: {
+    products() {
+      if (_.isEmpty(this.selectedManufacturer) && _.isEmpty(this.selectedProductCategory)) {
+        return this.$store.state.product.products
+      }    
+      else {
+        return this.$store.state.product.products.filter(product => {
+          return product.manufacturer.name == this.selectedManufacturer.name
+        })
+      }
+    },
+    manufacturers() {
+      return this.$store.getters['product/manufacturers']
+    },
+    categories() {
+      return this.$store.getters['product/categories']
+    }
+  },
   methods: {
+    productNameChanged() {
+      this.selectedManufacturer = this.selectedProduct.manufacturer
+    },
     doaChanged() {
       console.log(this.doa)
     }
   },
   data() {
     return {
-      selectedCustomer: null,
       customers: [ 'Vodafone SK', 'Telenor SK'],
-      selectedProductModel: null,
-      productModels: ['Iphone', 'Samsung'],
+      selectedCustomer: null,
+      
+      selectedProduct: null,
+      selectedManufacturer: null,
+      selectedCategory: null,
+
       selectedProductOperator: null,
       productOperators: ['Vodafone', 'Telenor'],
       selectedProductCategory: null,
-      productCategories: ['Telefon', 'Tablet', 'Modem', 'Kieg'],
       selectedRepairType: null,
       repairTypes: ['Repair', 'Csere'],
       doa: false

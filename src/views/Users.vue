@@ -1,4 +1,5 @@
 <template>
+  <v-layout justify-center wrap row>
     <v-flex>
       <v-tooltip bottom color="grey darken-1">
           <span slot="activator">
@@ -65,6 +66,7 @@
     </Dialog>
 
   </v-flex>
+</v-layout>
 </template>
 
 <script>

@@ -4,10 +4,10 @@
   <Toolbar @side-icon-click="toggleNav()"/>
    
     <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center wrap row>
+      <v-container fluid fill-height grid-list-md>
+        
           <router-view />
-        </v-layout>
+  
       </v-container>
     </v-content>
     
