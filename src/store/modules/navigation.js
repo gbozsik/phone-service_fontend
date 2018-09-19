@@ -14,10 +14,15 @@ export default {
             { title: 'Szerviz', icon: 'contacts', role: 'ROLE_USER', to: { name: 'users.index'}},
             { title: 'Árajánlat', icon: 'contacts', role: 'ROLE_USER', to: { name: 'users.index'}},
             { title: 'Kivétel', icon: 'contacts', role: 'ROLE_USER', to: { name: 'users.index'}},
-            { title: 'Raktár', icon: 'contacts', role: 'ROLE_USER', to: { name: 'users.index'}},
-            
+
             { divider: true, inset: false },
-            
+
+            { title: 'Munkalapok', icon: 'contacts', role: 'ROLE_USER', to: { name: 'claimlist.index'}},
+            { title: 'Raktár', icon: 'contacts', role: 'ROLE_USER', to: { name: 'users.index'}},
+
+            { divider: true, inset: false },
+
+
             { header: 'Adminisztráció', role: 'ROLE_ADMIN'},
             { title: 'Felhasználók', icon: 'contacts', role: 'ROLE_ADMIN', to: { name: 'users.index'}},
             { title: 'Partnerek', icon: 'contacts', role: 'ROLE_ADMIN', to: { name: 'partners.index'}},

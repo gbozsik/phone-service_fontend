@@ -1,37 +1,40 @@
 <template>
  <v-layout justify-center row>
    <v-flex>
-        <v-card-title><h2>{{title}}</h2>
-            <v-spacer></v-spacer>
-            <v-text-field append-icon="search" 
-                          label="Keresés" 
-                          single-line hide-details 
-                          v-model="table.search">
-            </v-text-field>
-        </v-card-title>
 
-        <v-data-table :title="title"
-                    :headers="table.headers" 
-                    :items="items" 
-                    :search="table.search" 
-                    rows-per-page-text="Sor / oldal"
-                    :rows-per-page-items="table.rows_per_page"
-                    :must-sort="true">
+       <Table title="Partnerek" :headers="headers" :items="items" :actions="tableActions" />
 
-            <template slot="items" slot-scope="props">
-                <td>{{ props.item.id }}</td>
-                <td class="text-xs-left">{{ props.item.name }}</td>
-                <td class="text-xs-right"><IDeleted :status="props.item.deleted" /></td>
-                
-                <td class="text-xs-right">
-                <v-btn flat icon color="teal lighten-1" @click="editDialogShow(props.item)"><v-icon>edit</v-icon></v-btn>
-                </td>
-            </template>
+        <!--<v-card-title><h2>{{title}}</h2>-->
+            <!--<v-spacer></v-spacer>-->
+            <!--<v-text-field append-icon="search" -->
+                          <!--label="Keresés" -->
+                          <!--single-line hide-details -->
+                          <!--v-model="table.search">-->
+            <!--</v-text-field>-->
+        <!--</v-card-title>-->
 
-            <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                Nincs találat a(z) "{{ table.search }}" kifejezésre.
-            </v-alert>
-        </v-data-table>
+        <!--<v-data-table :title="title"-->
+                    <!--:headers="table.headers" -->
+                    <!--:items="items" -->
+                    <!--:search="table.search" -->
+                    <!--rows-per-page-text="Sor / oldal"-->
+                    <!--:rows-per-page-items="table.rows_per_page"-->
+                    <!--:must-sort="true">-->
+
+            <!--<template slot="items" slot-scope="props">-->
+                <!--<td>{{ props.item.id }}</td>-->
+                <!--<td class="text-xs-left">{{ props.item.name }}</td>-->
+                <!--<td class="text-xs-right"><IDeleted :status="props.item.enabled" /></td>-->
+                <!---->
+                <!--<td class="text-xs-right">-->
+                <!--<v-btn flat icon color="teal lighten-1" @click="editDialogShow(props.item)"><v-icon>edit</v-icon></v-btn>-->
+                <!--</td>-->
+            <!--</template>-->
+
+            <!--<v-alert slot="no-results" :value="true" color="error" icon="warning">-->
+                <!--Nincs találat a(z) "{{ table.search }}" kifejezésre.-->
+            <!--</v-alert>-->
+        <!--</v-data-table>-->
 
         <Dialog v-if="table.selectedItem !== null" 
               title="Partner szerkesztése" 
@@ -101,10 +104,34 @@
                     headers: [
                         { text: "ID",               value: "id",        align:"left",  sortable: true },
                         { text: "Név",              value: "name",      align:"left",  sortable: true },
-                        { text: "Aktív/Inaktív",    value: "deleted",   align:"right",  sortable: true },
-                        { text: "Művelet",          align:"right", sortable: false }
+                        { text: "Aktív/Inaktív",    value: "enabled",   align:"right",  sortable: true },
+                        { text: "Művelet",          value: "actions",   align:"right", sortable: false }
                     ]
                 },
+                headers: [
+                    { text: "ID",               value: "id",        align:"left",  sortable: true },
+                    { text: "Név",              value: "name",      align:"left",  sortable: true },
+                    { text: "",              value: "",      align:"left",  sortable: true },
+                    { text: "",              value: "",      align:"left",  sortable: true },
+                    { text: "",              value: "",      align:"left",  sortable: true },
+                    { text: "",              value: "",      align:"left",  sortable: true },
+                    { text: "Aktív/Inaktív",    value: "enabled",   align:"left",  sortable: true },
+                    { text: "Művelet",          value: "actions",   align:"right", sortable: false }
+                ],
+                tableActions: [
+                    {
+                        icon: "edit",
+                        color: "teal lighten-1",
+                        click: this.editDialogShow,
+                        tooltip: "Szerkesztés"
+                    },
+                    {
+                        icon: "delete",
+                        color: "red lighten-1",
+                        click: this.deleteDialogShow,
+                        tooltip: "Törlés"
+                    }
+                ],
                 editDialog: {
                     state: false,
                     actions: [
