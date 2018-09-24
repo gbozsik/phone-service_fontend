@@ -36,7 +36,6 @@ export default {
          * TODO Ez itt még nem működik valamiért! Nem menti el a státuszt a backend
          */
         async updatePartner({ dispatch }, partner) {
-            console.log(partner)
             const {data} = await axios.post('/updatepartner', partner)
             console.log(data)
             dispatch('startup')

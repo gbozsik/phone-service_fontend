@@ -1,26 +1,53 @@
-import axios from 'axios'
+let axios = require('axios')
+let partner = require('./partner')
+
 
 export default {
+
+    data() {
+        return {
+            postBody: '',
+            errors: []
+        }
+    },
+
     namespaced: true,
     state: {
-        customers: []
+        customer: '',
+        custmoersOfpatner: [],
+        // custmoersOfpatner2: []
     },
     getters: {
-       
+        // actualPartner: partner.default.state.selected.id
     },
     actions: {
-        async getCustomersList({commit, rootState}) {
-            const partner = { id: rootState.partner.selected.id }
-            // TODO itt akkor ki kéne deríteni, hogy mi is a végpont a backenden
-            //const { data } = await axios.post('/customers', partner)
-            //commit('loadCustomersList', data)
+        async getCustomersList({commit}) {
+            const {data} = await axios.get('/customers')
+            commit('loadCustomersList', data)
         },
-       
+        async getCustomersListFromDb({commit}) {
+            const actualPartner = {id:partner.default.state.selected.id}
+            if (actualPartner.id == 0) {
+                // ide majd popup kell
+                
+                console.log('You need to choose a Partner first')
+            }
+            const { data } = await axios.post('getcustomersofpartner', actualPartner )
+            commit ('loadCustomersOfPartner', data )
+        },
+        async updateCustomer({ dispatch }, customer) {
+            const {data} = await axios.post('/updatecustomer', customer)
+            console.log(data)
+            dispatch('getCustomersListFromDb')
+        }
     },
     mutations: {
-        loadCustomersList: function (state, payload) {
-            state.products = payload
+        loadCustomersOfPartner: function (state, customers) {
+            state.custmoersOfpatner = customers
         },
-    },
-}
 
+        saveChangedCustomerDetails: function (state, customer) {
+            state.customer = customer
+        }
+    }
+}

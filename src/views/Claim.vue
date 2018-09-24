@@ -40,6 +40,31 @@
                     </v-container>
                 </v-card-text>
             </v-card>
+            <v-flex>
+                <v-card>
+                    <v-card-text>
+                        <h4 class="inputTitle">Tartozékok</h4>
+                <v-layout wrap>
+                    <v-flex xs6>
+                        <v-checkbox v-model="accu" label="Akku" required
+                                    @change="accuChanged()"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs6>
+                        <v-checkbox v-model="backcover" label="Hátlap" required
+                                    @change="bcoverChanged()"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs6>
+                        <v-checkbox v-model="charger" label="Töltő" required
+                                    @change="chargerChanged()"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs6>
+                        <v-checkbox v-model="headset" label="Headset" required
+                                    @change="headsetChanged()"></v-checkbox>
+                    </v-flex>
+                </v-layout>
+                    </v-card-text>
+                </v-card>
+            </v-flex>
         </v-flex>
 
         <v-flex>
@@ -113,7 +138,7 @@
                                           return-object>
                                 </v-select>
                             </v-flex>
-                            <v-flex xs12>
+                            <v-flex xs12 >
                                 <v-combobox v-model="selectedProductOperator" :items="productOperators"
                                             label="Készülék operátor"></v-combobox>
                             </v-flex>
@@ -121,10 +146,11 @@
                     </v-container>
                 </v-card-text>
             </v-card>
+            <v-flex>
             <v-card>
                 <v-card-text>
                     <h4 class="inputTitle">Készülék állapota</h4>
-                    <v-container>
+                    <!--<v-container>-->
                         <v-layout wrap>
                             <v-flex xs6>
                                 <v-checkbox v-model="conditionDisplay" label="Kijelző" required
@@ -143,14 +169,15 @@
                                             @change="hellChanged()"></v-checkbox>
                             </v-flex>
                         </v-layout>
-                    </v-container>
+                    <!--</v-container>-->
                 </v-card-text>
             </v-card>
+            </v-flex>
         </v-flex>
 
     </v-layout>
-    <v-layout>
-    <v-layout>
+    <v-flex>
+    <!--<v-layout>-->
         <v-flex xs12 sm12>
             <v-card >
                 <v-card-text>
@@ -165,8 +192,8 @@
                 </v-card-text>
             </v-card>
         </v-flex>
-    </v-layout>
-    </v-layout>
+    <!--</v-layout>-->
+    </v-flex>
     </v-container>
 </template>
 
