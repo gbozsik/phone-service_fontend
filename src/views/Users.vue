@@ -27,7 +27,7 @@
           <td class="text-xs-left">{{ props.item.firstName }}</td>
           <td class="text-xs-left">{{ props.item.lastName }}</td>
           <td class="text-xs-left">{{ props.item.email }}</td>
-          <td class="text-xs-right"><IDeleted :status="props.item.deleted" /></td>
+          <td class="text-xs-right"><IDeleted :status="props.item.isDeleted" /></td>
           <td>
           <v-btn flat icon color="teal lighten-1" @click="editDialogShow(props.item)"><v-icon>edit</v-icon></v-btn>
           </td>
@@ -37,10 +37,6 @@
           Nincs találat a(z) "{{ table.search }}" kifejezésre.
         </v-alert>
       </v-data-table>
-
-
-
-
 
       <Dialog v-if="table.selectedItem !== null"
               title="Partner szerkesztése"
@@ -65,16 +61,19 @@
                 <v-text-field label="E-mail" required v-model="table.selectedItem.email"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6>
-                <v-text-field label="Jelszó" type="password" required></v-text-field>
+                <v-text-field label="Jelszó" type="password" v-model="table.selectedItem.password" required></v-text-field>
               </v-flex>
               <v-flex xs12 sm6>
-                <v-text-field label="Jelszó megereősítés" type="password" required></v-text-field>
+                <v-text-field label="Jelszó megereősítés" type="password" v-model="editDialog.passwordAgain" value="false" required></v-text-field>
               </v-flex>
               <v-flex xs12 sm6>
                   <v-select :items="editDialog.content.selector"
                             label="Státusz" required
                             v-model="table.selectedItem.deleted"
                   ></v-select>
+                <v-alert v-if="editDialog.passwordAgain != table.selectedItem.password" :value="true" color="error">
+                  Nem egyeznek meg a megadott jelszavak
+                </v-alert>
               </v-flex>
               </v-layout>
             </v-container>
@@ -87,6 +86,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import Dialog from "@/components/Core/Dialog";
 import Table from "@/components/Core/Table";
 import IDeleted from '@/components/Icons/IDeleted'
@@ -108,15 +108,9 @@ export default {
         },
     },
 
-    components: {
-        Dialog,
-        Table,
-        IDeleted,
-    },
-
     data() {
         return {
-            title: "Partnerek",
+            title: "Felhasználók",
             table: {
                 selectedItem: null,
                 search: "",
@@ -134,6 +128,7 @@ export default {
 
             editDialog: {
                 state: false,
+                passwordAgain: null,
                 actions: [
                     {
                         text: "Mentés",
@@ -156,18 +151,30 @@ export default {
 
     methods: {
         editDialogShow(item) {
+            console.log('PASSWORD AGAIN: ', this.editDialog.passwordAgain)
+            // console.log('PASSWORD: ', this.table.selectedItem.password)
             this.table.selectedItem = _.cloneDeep(item)
             this.editDialog.state = true
         },
         editDialogSave() {
-            this.$store.dispatch("users/updateUser", this.table.selectedItem);
-            this.editDialog.state = false
+            console.log('passwordAgain: ', this.editDialog.passwordAgain)
+            if (this.table.selectedItem.password != this.editDialog.passwordAgain) {
+                console.log('passwords are not ok.')
+            }else {
+                this.$store.dispatch("users/updateUser", this.table.selectedItem);
+                console.log(this.table.selectedItem)
+                this.editDialog.passwordAgain = null
+                this.editDialog.state = false
+            }
         },
         editDialogClose() {
             this.editDialog.state = false
         },
         chooseAnotherColor() {
             this.table.selectedItem.color = _.sample(this.colors);
+        },
+        passwordsNotMatch(){
+            this.passwordsMatch = true
         }
     }
 }

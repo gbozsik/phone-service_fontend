@@ -3,7 +3,7 @@ import axios from 'axios'
 export default {
     namespaced: true,
     state: {
-        products: []
+        products: [],
     },
     getters: {
         manufacturers(state) {

@@ -4,11 +4,11 @@
   <Toolbar @side-icon-click="toggleNav()"/>
    
     <v-content>
-      <v-container fluid fill-height grid-list-md>
-        
-          <router-view />
-  
-      </v-container>
+      
+        <v-container fluid grid-list-md>
+          <router-view /> 
+        </v-container>
+      
     </v-content>
     
   <Footer text="Tanfield Service Manager"/>

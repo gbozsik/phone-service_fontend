@@ -1,5 +1,5 @@
 <template>
-  <v-icon v-if="status == false" class="enabled" >done</v-icon>
+  <v-icon v-if="status == true" class="enabled" >done</v-icon>
   <v-icon v-else class="disabled">block</v-icon>
 </template>
 

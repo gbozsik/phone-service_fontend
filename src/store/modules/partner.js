@@ -18,6 +18,11 @@ export default {
         },
         color(state) {
             return state.selected.color
+        },
+        enabledPartners(state) {
+            return state.items.filter(partner => {
+                return partner.enabled === true
+            })
         }
     },
     actions: {
@@ -36,8 +41,7 @@ export default {
          * TODO Ez itt még nem működik valamiért! Nem menti el a státuszt a backend
          */
         async updatePartner({ dispatch }, partner) {
-            const {data} = await axios.post('/updatepartner', partner)
-            console.log(data)
+            await axios.post('/updatepartner', partner)
             dispatch('startup')
         }
     },
@@ -51,7 +55,7 @@ export default {
 
             if (_.isArray(state.items) && state.items.length > 0) {
                 state.items.every(partner => {
-                    if (partner.deleted === false) {
+                    if (partner.enabled === true) {
                         state.selected = partner
                         return false
                     }

@@ -123,6 +123,7 @@
 </template>
 
 <script>
+    import _ from 'lodash'
     import Table from '@/components/Core/Table'
     import Dialog from '@/components/Core/Dialog'
     import IDeleted from '@/components/Icons/IDeleted'

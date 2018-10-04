@@ -24,8 +24,8 @@
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.id }}</td>
                 <td class="text-xs-left">{{ props.item.name }}</td>
-                <td class="text-xs-right"><IDeleted :status="props.item.enabled" /></td>
-
+                <td class="text-xs-right"><IEnabled :status="props.item.enabled" /></td>
+                
                 <td class="text-xs-right">
                 <v-btn flat icon color="teal lighten-1" @click="editDialogShow(props.item)"><v-icon>edit</v-icon></v-btn>
                 </td>
@@ -75,7 +75,7 @@
     import _ from 'lodash'
     import Table from '@/components/Core/Table'
     import Dialog from '@/components/Core/Dialog'
-    import IDeleted from '@/components/Icons/IDeleted'
+    import IEnabled from '@/components/Icons/IEnabled'
 
     export default {
 
@@ -91,7 +91,7 @@
         components: {
             Dialog,
             Table,
-            IDeleted,
+            IEnabled,
         },
 
         data() {
@@ -123,8 +123,8 @@
                     ],
                     content: {
                         selector: [
-                            { text: 'Inaktív',  value: false },
-                            { text: 'Aktív',  value: true }
+                            { text: 'Aktív',  value: true },
+                            { text: 'Inaktív',  value: false }
                         ],
                     }
                 },

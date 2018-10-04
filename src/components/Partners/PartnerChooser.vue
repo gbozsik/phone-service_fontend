@@ -23,7 +23,7 @@
                 return this.$store.getters['partner/name']
             },
             partners() {
-                return this.$store.state.partner.items
+                return this.$store.getters['partner/enabledPartners']
             },
             color() {
                 return this.$store.getters['partner/color']

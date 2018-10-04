@@ -23,6 +23,7 @@ export default {
     mutations: {
         loadUsersList: function (state, payload) {
             state.users = payload
+            console.log(payload)
         },
     },
 }

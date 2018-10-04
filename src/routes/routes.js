@@ -7,7 +7,7 @@ export default [
     {
         path: "/intake",
         name: "intake.index",
-        component: resolve => require(["@/views/Claim.vue"], resolve)
+        component: resolve => require(["@/views/Intake.vue"], resolve)
     },
     {
         path: "/repair",
